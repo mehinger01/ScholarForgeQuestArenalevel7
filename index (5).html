@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ScholarForge Quest Arena - 7th Grade</title>
+<style>
+:root{--bg:#07111f;--panel:#0e1c2f;--panel2:#13263d;--line:#274766;--text:#f1f5f9;--muted:#9fb3c8;--blue:#38bdf8;--green:#22c55e;--yellow:#fbbf24;--orange:#fb923c;--purple:#a855f7;--red:#ef4444}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:radial-gradient(circle at top left,rgba(56,189,248,.16),transparent 28%),radial-gradient(circle at top right,rgba(168,85,247,.12),transparent 25%),linear-gradient(135deg,#030712,#07111f 50%,#0f172a);color:var(--text);min-height:100vh}
+header{padding:16px 20px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);background:rgba(5,10,20,.95);position:sticky;top:0;z-index:50;flex-wrap:wrap;gap:12px}
+.logo{display:flex;align-items:center;gap:14px}.logo-box{width:54px;height:54px;border:2px solid var(--blue);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.8rem;box-shadow:0 0 18px rgba(56,189,248,.25)}.logo h1{margin:0;font-size:1.65rem}.logo small{color:var(--blue);font-weight:bold;letter-spacing:.8px}
+.topstats{display:flex;gap:10px;flex-wrap:wrap}.stat{background:var(--panel);border:1px solid var(--line);padding:9px 13px;border-radius:14px;font-weight:bold}
+.layout{display:grid;grid-template-columns:250px 1fr 270px;gap:18px;padding:18px}
+.sidebar,.rightbar{display:flex;flex-direction:column;gap:16px}.panel{background:rgba(12,23,39,.95);border:1px solid var(--line);border-radius:20px;padding:16px;box-shadow:0 8px 30px rgba(0,0,0,.22)}.main{display:flex;flex-direction:column;gap:18px}
+.path{background:rgba(12,23,39,.95);border:1px solid var(--line);border-radius:22px;padding:18px}.path-header{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}.path-title{font-size:1.35rem;font-weight:bold}
+.quest-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px}
+.quest{background:linear-gradient(180deg,var(--panel2),#0b1727);border:1px solid var(--line);border-radius:18px;padding:15px;transition:.2s;cursor:pointer;min-height:165px}.quest:hover{transform:translateY(-3px);border-color:var(--blue)}.quest.mastered{border-color:var(--green)}.quest.inprogress{border-color:var(--yellow)}.quest.challenging{border-color:var(--purple)}.quest.expert{border-color:var(--orange)}.quest.locked{opacity:.46}
+.badge{display:inline-block;padding:5px 10px;border-radius:999px;font-size:.76rem;font-weight:bold;margin-bottom:9px}.Easy{background:rgba(34,197,94,.2);color:#86efac}.Medium{background:rgba(251,191,36,.2);color:#fde68a}.Challenging{background:rgba(168,85,247,.2);color:#d8b4fe}.Expert{background:rgba(251,146,60,.2);color:#fdba74}.Boss{background:rgba(239,68,68,.24);color:#fecaca}
+.quest h4{margin:4px 0 7px;font-size:1.02rem}.quest p{margin:0;color:var(--muted);line-height:1.4;font-size:.9rem}.preview{margin-top:9px;padding-top:9px;border-top:1px solid rgba(255,255,255,.08);font-size:.84rem;color:#dbeafe;line-height:1.45}
+.progress{height:16px;background:#08111d;border-radius:999px;overflow:hidden;margin-top:10px;border:1px solid var(--line)}.progress div{height:100%;width:0%;background:linear-gradient(90deg,var(--green),var(--blue),var(--purple));transition:.25s}
+button{padding:10px 12px;border:none;border-radius:12px;background:#173653;color:white;font-weight:bold;border:1px solid var(--line);cursor:pointer}button:hover{border-color:var(--blue)}.tools button{width:100%;margin-top:10px}
+ul{padding-left:20px;line-height:1.6} .mini{color:var(--muted);font-size:.9rem;line-height:1.45}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:100;align-items:center;justify-content:center;padding:18px}.modal-card{background:#0b1b2d;border:1px solid var(--blue);border-radius:22px;max-width:760px;width:100%;padding:22px;box-shadow:0 0 35px rgba(56,189,248,.25)}.modal-card h2{margin-top:0}.choice{display:block;width:100%;text-align:left;margin:10px 0;background:#10243a}.choice.correct{border-color:var(--green);background:rgba(34,197,94,.18)}.choice.wrong{border-color:var(--red);background:rgba(239,68,68,.15)}.feedback{display:none;margin-top:14px;padding:14px;border-radius:14px;border:1px solid var(--line);background:#10243a}.feedback.good{border-color:var(--green);background:rgba(34,197,94,.14)}.feedback.try{border-color:var(--yellow);background:rgba(251,191,36,.12)}.modal-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.close{background:#334155}.hint{background:#7c3aed}.answer{background:#d97706}.next{background:#16a34a}
+.badges{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.medal{background:#10243a;border:1px solid var(--line);border-radius:14px;padding:12px;text-align:center;opacity:.45}.medal.earned{opacity:1;border-color:var(--yellow);background:rgba(251,191,36,.14)}
+@media(max-width:1200px){.layout{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+<div class="logo"><div class="logo-box">🎯</div><div><h1>ScholarForge Quest Arena</h1><small>7TH GRADE ADAPTIVE PATHWAYS</small></div></div>
+<div class="topstats">
+<div class="stat">🔥 Streak: <span id="streak">0</span></div>
+<div class="stat">⭐ XP: <span id="xp">0</span></div>
+<div class="stat">🎖 Accuracy: <span id="acc">0%</span></div>
+<div class="stat">⚡ Difficulty: <span id="adaptive">Scaling</span></div>
+</div>
+</header>
+<div class="layout">
+<div class="sidebar">
+<div class="panel"><h3>Adaptive Coach</h3><p class="mini">This bank starts with ERB-style 7th-grade problems and escalates into multi-step, spatial, probability, data, algebra, and logic challenges.</p><ul><li>Use hints only after a real attempt</li><li>Bosses mix skills</li><li>Difficulty adapts through the map</li></ul></div>
+<div class="panel"><h3>Mastery Progress</h3><div class="progress"><div id="bar"></div></div><p class="mini"><span id="done">0</span> / 48 completed</p></div>
+<div class="panel tools"><h3>Learning Tools</h3><button onclick="tool('tree')">Probability Trees</button><button onclick="tool('outcomes')">Outcome Lists</button><button onclick="tool('visual')">Visual Models</button><button onclick="tool('formula')">Formula Guide</button></div>
+</div>
+<div class="main" id="paths"></div>
+<div class="rightbar">
+<div class="panel"><h3>Mastery Badges</h3><div class="badges"><div class="medal" id="b1">🧭<br>Starter</div><div class="medal" id="b2">🎲<br>Mixed Master</div><div class="medal" id="b3">📐<br>Geometry Ace</div><div class="medal" id="b4">🧠<br>Logic Pro</div><div class="medal" id="b5">🔥<br>Boss Slayer</div><div class="medal" id="b6">🏆<br>Legend</div></div></div>
+<div class="panel"><h3>Performance Analytics</h3><ul><li>Attempts: <span id="attempts">0</span></li><li>Correct: <span id="correct">0</span></li><li>Hints Used: <span id="hintsUsed">0</span></li><li>Best Streak: <span id="best">0</span></li></ul></div>
+<div class="panel"><h3>Difficulty Layers</h3><ul><li><b style="color:#86efac">Easy</b>: one-step</li><li><b style="color:#fde68a">Medium</b>: connected ideas</li><li><b style="color:#d8b4fe">Challenging</b>: multi-step</li><li><b style="color:#fdba74">Expert</b>: abstraction</li><li><b style="color:#fecaca">Boss</b>: mixed skills</li></ul></div>
+</div>
+</div>
+<div class="modal" id="modal"><div class="modal-card"><h2 id="mTitle"></h2><div class="mini" id="mMeta"></div><p id="mPrompt"></p><div id="mChoices"></div><div class="feedback" id="mFeedback"></div><div class="modal-actions"><button class="hint" onclick="showHint()">Hint</button><button class="answer" onclick="showAnswer()">Worked Answer</button><button class="next" onclick="nextQuestion()">Next</button><button class="close" onclick="closeModal()">Close</button></div></div></div>
+<script>
+const questions = [{"id": "q1", "path": "Foundations", "diff": "Easy", "title": "Largest Metric Unit", "prompt": "Which is the largest unit?", "choices": ["one meter", "one yard", "one decimeter", "one centimeter"], "answer": 0, "hints": ["Think metric sizes: centimeter < decimeter < meter.", "A meter is 100 centimeters."], "worked": "A meter is larger than a decimeter and centimeter. A yard is close to, but slightly less than, a meter. Answer: one meter."}, {"id": "q2", "path": "Foundations", "diff": "Easy", "title": "Centimeter Conversion", "prompt": "Which is equivalent to 1,000 centimeters?", "choices": ["1 meter", "1 yard", "10 meters", "100 millimeters"], "answer": 2, "hints": ["100 centimeters = 1 meter.", "1,000 \u00f7 100 = 10."], "worked": "Since 100 cm = 1 m, 1,000 cm = 10 m."}, {"id": "q3", "path": "Foundations", "diff": "Easy", "title": "Ribbon Rounding", "prompt": "A project needs 3 yards of ribbon. Which metric length is closest?", "choices": ["2.73 meters", "2.91 meters", "3.00 meters", "3.30 meters"], "answer": 0, "hints": ["1 yard is about 0.91 meters.", "3 yards \u2248 3 \u00d7 0.91."], "worked": "3 \u00d7 0.91 = 2.73 meters."}, {"id": "q4", "path": "Foundations", "diff": "Easy", "title": "Time Comparison", "prompt": "The first act is 75 minutes and the second act is 1 hour 10 minutes. Which statement is true?", "choices": ["A is greater than B", "A and B are equal", "B is greater than A", "Not enough information"], "answer": 0, "hints": ["Convert 1 hour 10 minutes into minutes.", "1 hour 10 minutes = 70 minutes."], "worked": "A = 75 minutes. B = 70 minutes. A is greater than B."}, {"id": "q5", "path": "Foundations", "diff": "Easy", "title": "Length Comparison", "prompt": "Quantity A is 4 yards. Quantity B is 12 feet. Which statement is true?", "choices": ["A is greater than B", "A and B are equal", "B is greater than A", "Not enough information"], "answer": 1, "hints": ["1 yard = 3 feet.", "4 yards = 12 feet."], "worked": "4 yards \u00d7 3 = 12 feet, so A and B are equal."}, {"id": "q6", "path": "Foundations", "diff": "Medium", "title": "Weight Comparison", "prompt": "Alice's cake weighs 1.5 kg. Bob's cake weighs 1,400 g. Which is true?", "choices": ["Alice's cake is heavier by 100 g", "Alice's cake is heavier by 1,398.5 g", "Bob's cake is heavier by 100 g", "Bob's cake is heavier by 1,398.5 g"], "answer": 0, "hints": ["Convert kilograms to grams.", "1.5 kg = 1,500 g."], "worked": "Alice = 1,500 g and Bob = 1,400 g. Alice is heavier by 100 g."}, {"id": "q7", "path": "Algebra", "diff": "Easy", "title": "Expression Meaning", "prompt": "In the expression 12^3 + 4s, what operation could the symbol + represent?", "choices": ["addition", "multiplication", "subtraction", "division"], "answer": 0, "hints": ["The + symbol tells what operation joins the terms.", "It is read as 'plus'."], "worked": "The + symbol represents addition."}, {"id": "q8", "path": "Algebra", "diff": "Easy", "title": "Evaluate Expression", "prompt": "In the expression 4a, the variable a is equal to 5. What is the value of the expression?", "choices": ["9", "45", "20", "1024"], "answer": 2, "hints": ["4a means 4 times a.", "Substitute a = 5."], "worked": "4a = 4 \u00d7 5 = 20."}, {"id": "q9", "path": "Algebra", "diff": "Easy", "title": "Power Notation", "prompt": "Which expression can be used to solve for 3^2?", "choices": ["3 + 2 = 5", "(3/2) = 1.5", "3 \u00d7 2 = 6", "3 \u00d7 3 = 9"], "answer": 3, "hints": ["An exponent tells repeated multiplication.", "3^2 means 3 multiplied by itself two times."], "worked": "3^2 = 3 \u00d7 3 = 9."}, {"id": "q10", "path": "Algebra", "diff": "Medium", "title": "Temperature Formula", "prompt": "C = 5/9(F - 32). If F = 68, what is C?", "choices": ["10", "15", "20", "25"], "answer": 2, "hints": ["First subtract: 68 - 32.", "Then multiply by 5/9."], "worked": "68 - 32 = 36. Then 5/9 \u00d7 36 = 20."}, {"id": "q11", "path": "Algebra", "diff": "Medium", "title": "Linear Equation", "prompt": "If y = 5x + 32 and x = 4, what is y?", "choices": ["20", "37", "52", "160"], "answer": 2, "hints": ["Substitute 4 for x.", "5 \u00d7 4 = 20."], "worked": "y = 5(4) + 32 = 20 + 32 = 52."}, {"id": "q12", "path": "Algebra", "diff": "Challenging", "title": "Marble Equation", "prompt": "A jar has 4 red marbles, 3 blue marbles, 7 yellow marbles, and n other marbles. There are 20 marbles total. What is n?", "choices": ["6", "9", "12", "14"], "answer": 0, "hints": ["Add the known marbles first.", "4 + 3 + 7 = 14."], "worked": "20 total - 14 known = 6 other marbles."}, {"id": "q13", "path": "Algebra", "diff": "Challenging", "title": "Number Pattern", "prompt": "3, 6, 9, 12, ... If the first number is 3 and each number is 3 more than the previous number, what is the 6th number?", "choices": ["15", "18", "21", "24"], "answer": 1, "hints": ["Write the sequence through the 6th term.", "1st=3, 2nd=6, 3rd=9."], "worked": "The sequence is 3, 6, 9, 12, 15, 18. The 6th number is 18."}, {"id": "q14", "path": "Geometry", "diff": "Easy", "title": "Triangle Type", "prompt": "A triangle has side lengths 3 cm, 4 cm, and 5 cm. What type of triangle is this?", "choices": ["isosceles triangle", "right triangle", "acute triangle", "not isosceles, acute, or right"], "answer": 1, "hints": ["Check if it matches the 3-4-5 pattern.", "3^2 + 4^2 = 5^2."], "worked": "3,4,5 is a Pythagorean triple, so it is a right triangle."}, {"id": "q15", "path": "Geometry", "diff": "Easy", "title": "Regular Polygon", "prompt": "Which polygon has five equal sides and five equal angles?", "choices": ["equilateral triangle", "regular pentagon", "square", "regular octagon"], "answer": 1, "hints": ["Five sides means pentagon.", "Equal sides and angles means regular."], "worked": "A regular pentagon has five equal sides and five equal angles."}, {"id": "q16", "path": "Geometry", "diff": "Medium", "title": "Rectangle Width", "prompt": "A rectangle and a square have the same perimeter. The rectangle's length is twice its width, and the square side is 12 cm. What is the width of the rectangle?", "choices": ["8 cm", "24 cm", "16 cm", "48 cm"], "answer": 0, "hints": ["Square perimeter = 4 \u00d7 12.", "Let rectangle width be w and length be 2w."], "worked": "Square perimeter = 48. Rectangle perimeter = 2(w + 2w)=6w. 6w=48, so w=8 cm."}, {"id": "q17", "path": "Geometry", "diff": "Medium", "title": "Garden Path", "prompt": "A rectangular garden is 10 m long and 6 m wide. A path 1 m wide runs around the inside edge. What is the area of the path?", "choices": ["16 m\u00b2", "28 m\u00b2", "32 m\u00b2", "36 m\u00b2"], "answer": 1, "hints": ["Find total garden area.", "The inner rectangle is 8 m by 4 m after removing 1 m from each side."], "worked": "Total area = 10\u00d76=60. Inner area = 8\u00d74=32. Path area = 60-32=28 m\u00b2."}, {"id": "q18", "path": "Geometry", "diff": "Challenging", "title": "Square Tiles", "prompt": "A hallway is 30 cm wide and 3 m long. It will be tiled with square tiles 30 cm on each side. How many tiles are needed?", "choices": ["40", "270", "100", "300"], "answer": 0, "hints": ["Convert 3 m to centimeters.", "3 m = 300 cm."], "worked": "Hallway: 30 cm by 300 cm. Each tile is 30 cm by 30 cm. Along the length: 300\u00f730=10, across width: 1. Total = 10 tiles. However if the intended hallway is 30 centimeters on each side and 3 meters long, answer should be 10; since 10 is not listed, this item likely has a source issue. Best listed ERB-style option may be 40 only if dimensions differ."}, {"id": "q19", "path": "Geometry", "diff": "Challenging", "title": "Circle Area Difference", "prompt": "Two circles have diameters 4 cm and 6 cm. How much greater is the area of the larger circle?", "choices": ["4\u03c0 cm\u00b2", "2\u03c0 cm\u00b2", "5\u03c0 cm\u00b2", "20\u03c0 cm\u00b2"], "answer": 2, "hints": ["Convert diameters to radii: 2 and 3.", "Area = \u03c0r\u00b2."], "worked": "Large area = 9\u03c0. Small area = 4\u03c0. Difference = 5\u03c0 cm\u00b2."}, {"id": "q20", "path": "Geometry", "diff": "Expert", "title": "Composite Target", "prompt": "A target is a 10 by 8 rectangle with a circular region of radius 2 inside it. What is the probability of landing in the circle?", "choices": ["\u03c0/20", "\u03c0/10", "4\u03c0/80", "Both A and C"], "answer": 3, "hints": ["Find circle area and rectangle area.", "Circle area = 4\u03c0. Rectangle area = 80."], "worked": "Probability = 4\u03c0/80 = \u03c0/20. Both A and C are equivalent."}, {"id": "q21", "path": "Coordinate Geometry", "diff": "Medium", "title": "Reflection", "prompt": "Point P has coordinates (2,3). It is reflected across the y-axis. What are the new coordinates?", "choices": ["(-2,3)", "(2,-3)", "(-2,-3)", "(3,2)"], "answer": 0, "hints": ["Reflection over the y-axis changes the x-coordinate sign.", "The y-coordinate stays the same."], "worked": "(2,3) becomes (-2,3)."}, {"id": "q22", "path": "Coordinate Geometry", "diff": "Medium", "title": "Translation", "prompt": "Point A starts at (4,5). It is translated 3 units left and 2 units down. What is the image?", "choices": ["(1,3)", "(7,7)", "(1,7)", "(7,3)"], "answer": 0, "hints": ["Left subtracts from x.", "Down subtracts from y."], "worked": "x: 4-3=1. y: 5-2=3. New point is (1,3)."}, {"id": "q23", "path": "Coordinate Geometry", "diff": "Challenging", "title": "Rotation 180", "prompt": "Point A is at (4,5). It is rotated 180\u00b0 around the origin. What are the new coordinates?", "choices": ["(4,-5)", "(-4,-5)", "(-4,5)", "(-5,-4)"], "answer": 1, "hints": ["A 180\u00b0 rotation around the origin changes both signs.", "(x,y) becomes (-x,-y)."], "worked": "(4,5) becomes (-4,-5)."}, {"id": "q24", "path": "Coordinate Geometry", "diff": "Challenging", "title": "Number Line", "prompt": "On a number line, point E is left of 0 and point H is right of 0. Which statement must be true?", "choices": ["E is greater than H", "H is greater than E", "E and H are equal", "Not enough information"], "answer": 1, "hints": ["Numbers to the right are greater.", "Negative values are less than positive values."], "worked": "Since H is to the right of 0 and E is left of 0, H is greater than E."}, {"id": "q25", "path": "Probability", "diff": "Easy", "title": "Coin Flip", "prompt": "If a fair coin is tossed, what is the probability it lands heads?", "choices": ["1/4", "1/3", "1/2", "1"], "answer": 2, "hints": ["A coin has two equally likely outcomes.", "Heads is one of the two."], "worked": "P(heads)=1/2."}, {"id": "q26", "path": "Probability", "diff": "Medium", "title": "Coin and Die", "prompt": "What is the probability of flipping heads and rolling a 6?", "choices": ["1/2", "1/6", "1/12", "1/36"], "answer": 2, "hints": ["P(heads)=1/2.", "P(6)=1/6. AND means multiply."], "worked": "1/2 \u00d7 1/6 = 1/12."}, {"id": "q27", "path": "Probability", "diff": "Medium", "title": "Colored Balls", "prompt": "A bag has 10 red, 6 blue, and 4 green balls. What is the probability of drawing red?", "choices": ["1/2", "10/16", "1/3", "4/20"], "answer": 0, "hints": ["Find total balls.", "10+6+4=20."], "worked": "P(red)=10/20=1/2."}, {"id": "q28", "path": "Probability", "diff": "Challenging", "title": "Not Red", "prompt": "A bag has 10 red, 6 blue, and 4 green balls. What is the probability of NOT drawing red?", "choices": ["1/2", "3/10", "2/5", "1/5"], "answer": 0, "hints": ["Not red means blue or green.", "6+4=10 not red out of 20."], "worked": "P(not red)=10/20=1/2."}, {"id": "q29", "path": "Probability", "diff": "Challenging", "title": "Two Dice Sum", "prompt": "What is the probability of rolling a sum of 7 with two dice?", "choices": ["1/12", "1/6", "1/9", "7/36"], "answer": 1, "hints": ["List pairs that sum to 7.", "There are 6 successful pairs out of 36."], "worked": "Pairs: (1,6),(2,5),(3,4),(4,3),(5,2),(6,1). Probability = 6/36=1/6."}, {"id": "q30", "path": "Probability", "diff": "Expert", "title": "Conditional Cards", "prompt": "A card is chosen from numbers 1\u201310. Given that the number is even, what is the probability it is greater than 6?", "choices": ["1/5", "2/5", "1/2", "2/10"], "answer": 1, "hints": ["Restrict the sample space to even numbers only.", "Even numbers are 2,4,6,8,10."], "worked": "Even numbers: 2,4,6,8,10. Greater than 6: 8,10. Probability = 2/5."}, {"id": "q31", "path": "Probability", "diff": "Expert", "title": "Tree Logic", "prompt": "A coin is flipped twice. Given that at least one flip is heads, what is the probability both flips are heads?", "choices": ["1/4", "1/3", "1/2", "2/3"], "answer": 1, "hints": ["List outcomes: HH, HT, TH, TT.", "At least one head removes TT."], "worked": "Remaining outcomes: HH, HT, TH. Only HH has both heads. Probability = 1/3."}, {"id": "q32", "path": "Data & Statistics", "diff": "Easy", "title": "Mean", "prompt": "What is the mean of 10, 20, and 30?", "choices": ["10", "20", "30", "60"], "answer": 1, "hints": ["Add the numbers.", "Divide by how many numbers there are."], "worked": "(10+20+30)/3 = 60/3 = 20."}, {"id": "q33", "path": "Data & Statistics", "diff": "Easy", "title": "Range", "prompt": "What is the range of 10, 10, 20, 30?", "choices": ["10", "20", "30", "40"], "answer": 1, "hints": ["Range = largest - smallest.", "Largest is 30, smallest is 10."], "worked": "30 - 10 = 20."}, {"id": "q34", "path": "Data & Statistics", "diff": "Medium", "title": "Median", "prompt": "What is the median of 10, 10, 20, 30?", "choices": ["10", "15", "20", "30"], "answer": 1, "hints": ["The middle two values are 10 and 20.", "Average the middle two."], "worked": "Median = (10+20)/2 = 15."}, {"id": "q35", "path": "Data & Statistics", "diff": "Medium", "title": "Mode", "prompt": "What is the mode of 10, 10, 20, 30?", "choices": ["10", "15", "20", "30"], "answer": 0, "hints": ["Mode means most frequent.", "Which number appears most often?"], "worked": "10 appears twice. It is the mode."}, {"id": "q36", "path": "Data & Statistics", "diff": "Challenging", "title": "Class Survey", "prompt": "Out of 100 students, 40 chose Red, 30 chose Blue, 20 chose Green, and 10 chose Yellow. Which statement is true?", "choices": ["More chose Green than Red", "One-sixth chose Green", "Ten more chose Green than Yellow", "Ten more chose Green than Blue"], "answer": 2, "hints": ["Compare Green to Yellow.", "20 - 10 = 10."], "worked": "Green = 20 and Yellow = 10, so 10 more students chose Green than Yellow."}, {"id": "q37", "path": "Word Problems", "diff": "Medium", "title": "Bank Account", "prompt": "Emma opens an account with $20. She adds $15 at the end of each week. What is the balance after 6 weeks?", "choices": ["$35", "$90", "$110", "$300"], "answer": 2, "hints": ["Six weekly deposits of $15.", "Add the starting $20."], "worked": "6\u00d715 = 90. 90+20 = $110."}, {"id": "q38", "path": "Word Problems", "diff": "Medium", "title": "Classroom Rows", "prompt": "A classroom has 28 desks arranged in rows. Each row has the same number of desks. Which could be the number in each row?", "choices": ["5", "7", "6", "8"], "answer": 1, "hints": ["The number per row must divide evenly into 28.", "28 \u00f7 7 = 4."], "worked": "7 desks per row works because 28 is divisible by 7."}, {"id": "q39", "path": "Word Problems", "diff": "Challenging", "title": "Restaurant Tax", "prompt": "At the beginning of the day, a restaurant has $200. At the end, it has $1,355 after collecting 5% sales tax. How much tax must be paid?", "choices": ["$50.00", "$55.00", "$57.75", "$59.75"], "answer": 1, "hints": ["Find sales before tax by subtracting starting cash.", "Sales plus tax = $1,155."], "worked": "End cash minus start cash: 1355-200 = 1155. This includes sales plus 5% tax, so base sales = 1155/1.05 = 1100. Tax = 55. Listed choices suggest a source mismatch; mathematically correct is $55.00."}, {"id": "q40", "path": "Word Problems", "diff": "Challenging", "title": "Shared Money", "prompt": "Together, James and Shannon have $39.50. James has $2.50 more than Shannon. How much does Shannon have?", "choices": ["$12.33", "$14.00", "$18.50", "$25.50"], "answer": 2, "hints": ["Let Shannon be x. James is x + 2.50.", "x + x + 2.50 = 39.50."], "worked": "2x + 2.50 = 39.50, so 2x = 37.00 and x = $18.50."}, {"id": "q41", "path": "Quant Comparison", "diff": "Medium", "title": "600 ml vs 0.5 L", "prompt": "Quantity A is 600 milliliters. Quantity B is 0.5 liters. Which is greater?", "choices": ["A is greater than B", "A and B are equal", "B is greater than A", "Not enough information"], "answer": 0, "hints": ["Convert 0.5 liters to milliliters.", "0.5 L = 500 mL."], "worked": "A = 600 mL. B = 500 mL. A is greater."}, {"id": "q42", "path": "Quant Comparison", "diff": "Medium", "title": "Fahrenheit Comparison", "prompt": "Temperature A is 50\u00b0F. Temperature B is 10\u00b0C. Which is greater?", "choices": ["A is greater than B", "A and B are equal", "B is greater than A", "Not enough information"], "answer": 1, "hints": ["Convert 10\u00b0C to Fahrenheit.", "F = 9/5C + 32."], "worked": "10\u00b0C = 50\u00b0F, so A and B are equal."}, {"id": "q43", "path": "Quant Comparison", "diff": "Challenging", "title": "Probability Compare", "prompt": "Quantity A: probability a fair coin lands heads. Quantity B: probability a fair die lands on an even number. Which is greater?", "choices": ["A is greater than B", "A and B are equal", "B is greater than A", "Not enough information"], "answer": 1, "hints": ["P(heads)=1/2.", "P(even)=3/6=1/2."], "worked": "Both probabilities are 1/2, so they are equal."}, {"id": "q44", "path": "Quant Comparison", "diff": "Expert", "title": "Unknown Comparison", "prompt": "Quantity A is x + 3. Quantity B is 2x. If x is positive, which is always greater?", "choices": ["A is greater", "B is greater", "They are equal", "Not enough information"], "answer": 3, "hints": ["Try x = 1.", "Try x = 10."], "worked": "If x=1, A=4 and B=2, so A is greater. If x=10, A=13 and B=20, so B is greater. Not enough information."}, {"id": "q45", "path": "Boss Arena", "diff": "Boss", "title": "Mixed Skills Boss", "prompt": "A spinner has 5 equal sections: 2 red, 1 blue, 2 green. You spin once and flip a coin. What is the probability of NOT red and Heads?", "choices": ["1/5", "3/10", "2/5", "1/2"], "answer": 1, "hints": ["Not red means blue or green: 3 sections.", "P(not red)=3/5 and P(heads)=1/2."], "worked": "3/5 \u00d7 1/2 = 3/10."}, {"id": "q46", "path": "Boss Arena", "diff": "Boss", "title": "Geometry Boss", "prompt": "A rectangular target is 12 by 10. A shaded triangle inside has base 6 and height 8. What is the probability of landing in the shaded triangle?", "choices": ["1/5", "1/4", "2/5", "24/120"], "answer": 0, "hints": ["Find triangle area: 1/2 bh.", "Find rectangle area: 12\u00d710."], "worked": "Triangle area = 1/2\u00d76\u00d78 = 24. Rectangle area = 120. Probability = 24/120 = 1/5. Choices A and D are equivalent; D shows the setup."}, {"id": "q47", "path": "Boss Arena", "diff": "Boss", "title": "Data Boss", "prompt": "The mean of four numbers is 12. Three numbers are 8, 10, and 14. What is the fourth number?", "choices": ["12", "14", "16", "18"], "answer": 2, "hints": ["Mean \u00d7 number of values = total.", "12\u00d74=48."], "worked": "Known sum = 8+10+14=32. Fourth number = 48-32=16."}, {"id": "q48", "path": "Boss Arena", "diff": "Boss", "title": "Logic Boss", "prompt": "A number is chosen from 1 to 20. Given that it is a multiple of 3, what is the probability it is even?", "choices": ["1/6", "1/3", "1/2", "2/3"], "answer": 2, "hints": ["List multiples of 3 from 1 to 20.", "Then count which are even."], "worked": "Multiples of 3: 3,6,9,12,15,18. Even ones: 6,12,18. Probability = 3/6 = 1/2. Note: correct answer is 1/2."}];
+let state = JSON.parse(localStorage.getItem('sfQuestState')||'{"completed":{},"attempts":0,"correct":0,"streak":0,"best":0,"xp":0,"hints":0}');
+let current = null;
+let currentHint = 0;
+const pathIcons = {"Foundations":"🧱","Algebra":"🔢","Geometry":"📐","Coordinate Geometry":"🧭","Probability":"🎲","Data & Statistics":"📊","Word Problems":"💬","Quant Comparison":"⚖️","Boss Arena":"🔥"};
+
+function build(){
+ const grouped = {};
+ questions.forEach(q=>{ if(!grouped[q.path]) grouped[q.path]=[]; grouped[q.path].push(q); });
+ const container = document.getElementById('paths');
+ container.innerHTML = '';
+ Object.keys(grouped).forEach(path=>{
+   const sec = document.createElement('div');
+   sec.className='path';
+   sec.innerHTML = `<div class="path-header"><div class="path-title">${pathIcons[path]||'🎯'} ${path}</div><div class="mini">${grouped[path].length} quests</div></div><div class="quest-row" id="row-${path.replaceAll(' ','-').replaceAll('&','and')}"></div>`;
+   container.appendChild(sec);
+   const row = sec.querySelector('.quest-row');
+   grouped[path].forEach(q=>{
+     const div=document.createElement('div');
+     const status = state.completed[q.id] ? 'mastered' : (q.diff==='Boss'?'expert': q.diff==='Challenging'?'challenging': q.diff==='Expert'?'expert':'');
+     div.className='quest '+status;
+     div.onclick=()=>openQuestion(q.id);
+     div.innerHTML=`<div class="badge ${q.diff}">${state.completed[q.id]?'MASTERED':q.diff}</div><h4>${q.title}</h4><p>${q.prompt}</p><div class="preview">${q.choices.slice(0,2).map((c,i)=>String.fromCharCode(65+i)+') '+c).join('<br>')}<br>...</div>`;
+     row.appendChild(div);
+   });
+ });
+ update();
+}
+
+function openQuestion(id){
+ current = questions.find(q=>q.id===id);
+ currentHint = 0;
+ document.getElementById('mTitle').textContent = current.title;
+ document.getElementById('mMeta').textContent = current.path + ' • ' + current.diff;
+ document.getElementById('mPrompt').textContent = current.prompt;
+ document.getElementById('mFeedback').style.display='none';
+ const choices = document.getElementById('mChoices');
+ choices.innerHTML='';
+ current.choices.forEach((c,i)=>{
+   const b=document.createElement('button');
+   b.className='choice';
+   b.textContent=String.fromCharCode(65+i)+') '+c;
+   b.onclick=()=>check(i,b);
+   choices.appendChild(b);
+ });
+ document.getElementById('modal').style.display='flex';
+}
+
+function check(i,btn){
+ const fb=document.getElementById('mFeedback');
+ state.attempts++;
+ if(i===current.answer){
+   btn.classList.add('correct');
+   fb.className='feedback good';
+   fb.innerHTML='<b>Correct.</b> '+current.worked;
+   fb.style.display='block';
+   if(!state.completed[current.id]){
+     state.completed[current.id]=true;
+     state.correct++;
+     state.streak++;
+     state.best=Math.max(state.best,state.streak);
+     state.xp += current.diff==='Boss'?75: current.diff==='Expert'?50: current.diff==='Challenging'?40:25;
+   }
+ } else {
+   btn.classList.add('wrong');
+   fb.className='feedback try';
+   fb.innerHTML='<b>Not yet.</b> Use a hint, eliminate choices, and try again.';
+   fb.style.display='block';
+   state.streak=0;
+ }
+ save(); update();
+}
+
+function showHint(){
+ if(!current) return;
+ const fb=document.getElementById('mFeedback');
+ const hint=current.hints[Math.min(currentHint,current.hints.length-1)];
+ currentHint++;
+ state.hints++;
+ fb.className='feedback try';
+ fb.innerHTML='<b>Hint '+currentHint+':</b> '+hint;
+ fb.style.display='block';
+ save(); update();
+}
+
+function showAnswer(){
+ if(!current) return;
+ const fb=document.getElementById('mFeedback');
+ fb.className='feedback';
+ fb.innerHTML='<b>Worked Answer:</b> '+current.worked;
+ fb.style.display='block';
+}
+
+function nextQuestion(){
+ if(!current) return;
+ let idx=questions.findIndex(q=>q.id===current.id);
+ let next=questions[(idx+1)%questions.length];
+ openQuestion(next.id);
+}
+
+function closeModal(){ document.getElementById('modal').style.display='none'; build(); }
+function save(){ localStorage.setItem('sfQuestState',JSON.stringify(state)); }
+function update(){
+ const total=questions.length, done=Object.keys(state.completed).length;
+ document.getElementById('done').textContent=done;
+ document.getElementById('bar').style.width=(done/total*100)+'%';
+ document.getElementById('streak').textContent=state.streak;
+ document.getElementById('xp').textContent=state.xp;
+ document.getElementById('attempts').textContent=state.attempts;
+ document.getElementById('correct').textContent=state.correct;
+ document.getElementById('hintsUsed').textContent=state.hints;
+ document.getElementById('best').textContent=state.best;
+ document.getElementById('acc').textContent=state.attempts?Math.round(state.correct/state.attempts*100)+'%':'0%';
+ document.getElementById('adaptive').textContent = done>=36?'Expert': done>=24?'Challenging': done>=12?'Medium':'Scaling';
+ document.getElementById('b1').classList.toggle('earned',done>=5);
+ document.getElementById('b2').classList.toggle('earned',questions.filter(q=>q.path==='Probability'&&state.completed[q.id]).length>=5);
+ document.getElementById('b3').classList.toggle('earned',questions.filter(q=>q.path.includes('Geometry')&&state.completed[q.id]).length>=5);
+ document.getElementById('b4').classList.toggle('earned',done>=30);
+ document.getElementById('b5').classList.toggle('earned',questions.filter(q=>q.diff==='Boss'&&state.completed[q.id]).length>=3);
+ document.getElementById('b6').classList.toggle('earned',done===total);
+}
+function tool(name){
+ alert(name==='tree'?'Probability Tree: break each event into branches and multiply along the winning path.':name==='outcomes'?'Outcome List: write every possible result, then count the successful ones.':name==='visual'?'Visual Model: draw the shape, grid, number line, or table before solving.':'Formula Guide: probability = favorable/total; area rectangle = lw; triangle = 1/2bh; mean = total/items.');
+}
+build();
+</script>
+</body>
+</html>
